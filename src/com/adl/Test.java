@@ -34,7 +34,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.BadLocationException;
 
-public class Test {
+public class Test  {
 
 	public class SuggestionPanel {
 		private JList list;
@@ -360,7 +360,8 @@ public class Test {
 					// System.out.println("temp int >>> " + tempInt);
 				}
 
-				TestBase tb = new TestBase();
+				TestBase tb = new TestBase("Selenium","Chrome");// FROM UI - Project creation
+				
 				for (List<String> li : finalStringList) {
 
 					// System.out.println("len >>>" + li.size());

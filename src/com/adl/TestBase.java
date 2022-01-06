@@ -11,14 +11,32 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
-public class TestBase {
+import net.bytebuddy.implementation.bind.annotation.Super;
+
+public class TestBase extends Config{
 
 	WebDriver driver = null;
 	
-	public TestBase(){
-		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\lib\\chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
+	public TestBase(String technology,String browser){
+		
+		super(technology,browser);
+//		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\lib\\chromedriver.exe");
+//		driver = new ChromeDriver();
+//		driver.manage().window().maximize();
+	}
+	
+	public void callCommonOperations(List<String> obj) {
+		int i = 0;
+		String cmd = "";
+		String function = "";
+		for(String str : obj){
+			if(i == 0){
+				cmd = str;
+			}else if(i == 1){
+				function = str;
+			}
+			i++;
+		}
 	}
 	
 	
