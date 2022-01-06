@@ -70,7 +70,7 @@ public class Test  {
 			// }
 			Object[] data = new Object[10];
 			Object[] dataTemp = { "click", "checkElementPresent", "type", "open", "pause", "quit", "close", "mouseover",
-					"select", "selectframe" };
+					"select", "selectframe", "call" };
 			int j = 0;
 			for (int i = 0; i < dataTemp.length; i++) {
 				String tmp = dataTemp[i].toString();
@@ -116,6 +116,9 @@ public class Test  {
 			List<String> selecframetList = new ArrayList<>();
 			selecframetList.add("object");
 			map.put("selectframe", selecframetList);
+			List<String> callList = new ArrayList<>();
+			callList.add("function");
+			map.put("call", callList);
 
 			JList list = new JList(data);
 			list.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
@@ -246,7 +249,7 @@ public class Test  {
 
 	protected void initUI() {
 		final JFrame frame = new JFrame();
-		frame.setTitle("Autofra");
+		frame.setTitle("AutomaterX");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel panel = new JPanel(new BorderLayout());
 
@@ -279,14 +282,19 @@ public class Test  {
 
 			List<List<String>> finalStringList = new ArrayList<>();
 			List<String> stList = null;
-			String temp = "";
 			int tempInt = 0;
 
-			private void jMenuItem1ActionPerformed(ActionEvent evt) {
+			private void jMenuItem1ActionPerformed(ActionEvent evt) {				
 				for (String line : textarea.getText().split("\\n")) {
 					if (tempInt < 0)
 						tempInt = 0;
-					if (line.equalsIgnoreCase("click")) {
+					if (line.equalsIgnoreCase("call")) {
+						// System.out.println(">>> from click");
+
+						stList = new ArrayList<>();
+						stList.add(line);
+						tempInt = 1;
+					} else if (line.equalsIgnoreCase("click")) {
 						// System.out.println(">>> from click");
 
 						stList = new ArrayList<>();
@@ -360,7 +368,7 @@ public class Test  {
 					// System.out.println("temp int >>> " + tempInt);
 				}
 
-				TestBase tb = new TestBase("Selenium","Chrome");// FROM UI - Project creation
+				TestBase tb = new TestBase();// FROM UI - Project creation
 				
 				for (List<String> li : finalStringList) {
 
@@ -397,11 +405,15 @@ public class Test  {
 					if (li.get(0).equalsIgnoreCase("selectframe")) {
 						tb.select(li);
 					}
+					if(li.get(0).equalsIgnoreCase("call")) {
+						tb.call(li);
+					}
 					// for(String str : li){
 					// System.out.println("str>>> " + str);
 					//
 					// }
 				}
+				finalStringList.clear();
 
 			}
 
