@@ -80,7 +80,7 @@ public class TestBase extends Config {
 				this.call(li);
 			}
 			if(li.get(0).equalsIgnoreCase("end")) {
-				//end the bc need to add a method
+				//end the function need to add a method
 				break;
 			}
 		}
