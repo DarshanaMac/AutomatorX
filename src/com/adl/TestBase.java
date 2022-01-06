@@ -15,27 +15,74 @@ import net.bytebuddy.implementation.bind.annotation.Super;
 
 public class TestBase extends Config {
 
-	WebDriver driver = null;
 
-	public TestBase(String technology, String browser) {
+	public TestBase() {
 
-		super(technology, browser);
+		super();
 //		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\src\\lib\\chromedriver.exe");
 //		driver = new ChromeDriver();
 //		driver.manage().window().maximize();
 	}
 
-	public void callCommonOperations(List<String> obj) {
-		int i = 0;
+	public void call(List<String> obj) {
 		String cmd = "";
+		String parameters="";
+		String lib="";
 		String function = "";
-		for (String str : obj) {
-			if (i == 0) {
-				cmd = str;
-			} else if (i == 1) {
-				function = str;
+		List<List<String>> finalStringList=null;
+		
+		cmd=obj.get(0);
+		parameters=obj.get(1).split(":")[1];
+		lib=parameters.split("\\.")[0];
+		function=parameters.split("\\.")[1];
+		
+		
+		//get command list
+		finalStringList=createCommandList(lib, function);
+		
+		//Execute function
+		for (List<String> li : finalStringList) {
+
+			// System.out.println("len >>>" + li.size());
+			// System.out.println(">>> " + li.get(0));
+			if (li.get(0).equalsIgnoreCase("type")) {
+				this.type(li);
 			}
-			i++;
+			if (li.get(0).equalsIgnoreCase("open")) {
+				// System.out.println("Called open");
+				this.open(li);
+			}
+			if (li.get(0).equalsIgnoreCase("click")) {
+				this.click(li);
+			}
+			if (li.get(0).equalsIgnoreCase("pause")) {
+				this.pause(li);
+			}
+			if (li.get(0).equalsIgnoreCase("quit")) {
+				this.quit(li);
+			}
+			if (li.get(0).equalsIgnoreCase("close")) {
+				this.close(li);
+			}
+			if (li.get(0).equalsIgnoreCase("mouseover")) {
+				this.mouseover(li);
+			}
+			if (li.get(0).equalsIgnoreCase("checkElementPresent")) {
+				this.checkElementPresent(li);
+			}
+			if (li.get(0).equalsIgnoreCase("select")) {
+				this.select(li);
+			}
+			if (li.get(0).equalsIgnoreCase("selectframe")) {
+				this.select(li);
+			}
+			if(li.get(0).equalsIgnoreCase("call")) {
+				this.call(li);
+			}
+			if(li.get(0).equalsIgnoreCase("end")) {
+				//end the bc need to add a method
+				break;
+			}
 		}
 	}
 
